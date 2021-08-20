@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+        姓：<input type="text" v-model="firstName"/> <br>
+        名：<input type="text" v-model="lastName"/> <br>
+
+        全名：{{fullName}} <br>
+        <!-- 计算属性无法双向绑定 -->
+        <input type="text" v-model="fullName"/>
+
+        全名：{{fullName2}} <br>
+        <!-- 计算属性无法双向绑定 -->
+        <input type="text" v-model="fullName2"/>
+    </div>
+    
+    <script src="vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                firstName: 'helen',
+                lastName: 'yao'
+            },
+            computed: {
+                // 默认只有getter
+                fullName() {
+                    console.log('fullName计算属性')
+                    return this.firstName + ' ' + this.lastName
+                },
+                fullName2: {
+                    get() {
+                        console.log('fullName2计算属性')
+                        return this.firstName + ' ' + this.lastName
+                    },
+                    set(value) {
+                        console.log('输入的值是：' + value)
+                        const names = value.split(' ')
+                        this.firstName = names[0]
+                        this.lastName = names[1]
+                    }
+                }
+            },
+        })
+    </script>
+</body>
+</html>
